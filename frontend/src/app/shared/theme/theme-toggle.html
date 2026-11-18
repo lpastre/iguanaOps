@@ -1,0 +1,11 @@
+<button
+  class="theme-toggle"
+  type="button"
+  [attr.aria-label]="
+    themeService.theme() === 'dark' ? 'Ativar tema claro' : 'Ativar tema escuro'
+  "
+  [attr.aria-pressed]="themeService.theme() === 'dark'"
+  (click)="themeService.toggle()"
+>
+  <span aria-hidden="true">{{ themeService.theme() === 'dark' ? 'Claro' : 'Escuro' }}</span>
+</button>

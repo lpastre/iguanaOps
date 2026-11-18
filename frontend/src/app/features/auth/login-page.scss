@@ -1,0 +1,74 @@
+.login-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+  background:
+    radial-gradient(circle at top right, var(--color-primary-soft), transparent 38rem),
+    var(--color-canvas);
+}
+
+.login-card {
+  width: min(100%, 29rem);
+  padding: clamp(1.5rem, 5vw, 3rem);
+  text-align: center;
+}
+
+.login-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.brand-mark {
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  place-items: center;
+  border-radius: 0.75rem;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-size: 0.75rem;
+}
+
+.login-card h1 {
+  margin: 2rem 0 0.75rem;
+  font-size: clamp(1.6rem, 5vw, 2.25rem);
+  line-height: 1.12;
+}
+
+.login-card p {
+  margin: 0 0 1.5rem;
+  color: var(--color-text-muted);
+}
+
+.sign-in-button {
+  width: 100%;
+  min-height: 3rem;
+  border: 0;
+  border-radius: 0.75rem;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.mock-sign-in-button {
+  width: 100%;
+  min-height: 3.25rem;
+  margin-top: 0.75rem;
+  border: 1px dashed var(--color-primary);
+  border-radius: 0.75rem;
+  background: transparent;
+  color: var(--color-primary-strong);
+  cursor: pointer;
+}
+
+.mock-sign-in-button strong {
+  display: block;
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}

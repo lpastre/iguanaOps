@@ -1,0 +1,154 @@
+.dashboard h1 {
+  margin: 0.45rem 0 0.5rem;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  letter-spacing: -0.045em;
+  line-height: 1.12;
+}
+
+.intro {
+  max-width: 42rem;
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.welcome-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.welcome-icon {
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  place-items: center;
+  border-radius: 1rem;
+  background: var(--color-primary-soft);
+  color: var(--color-primary-strong);
+  font-size: 0.8125rem;
+  font-weight: 800;
+}
+
+.welcome-card h2 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.welcome-card p {
+  margin: 0.25rem 0 0;
+  color: var(--color-text-muted);
+}
+
+.dashboard-state {
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+}
+
+.dashboard-state h2 {
+  margin: 0 0 0.35rem;
+}
+
+.dashboard-state p {
+  margin: 0 0 1rem;
+  color: var(--color-text-muted);
+}
+
+.dashboard-state button {
+  min-height: 2.5rem;
+  border: 0;
+  border-radius: 0.65rem;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  padding: 0.5rem 0.875rem;
+  cursor: pointer;
+  font-weight: 750;
+}
+
+.request-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.request-summary > div {
+  display: grid;
+  gap: 0.25rem;
+  padding: 1rem;
+}
+
+.request-summary strong {
+  font-size: 1.5rem;
+}
+
+.live-status {
+  color: var(--color-text-muted);
+}
+
+.request-list {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.request-card {
+  display: grid;
+  grid-template-columns: 1fr minmax(8rem, 14rem);
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem;
+}
+
+.request-card h2 {
+  margin: 0.25rem 0;
+  font-size: 1rem;
+}
+
+.request-card small {
+  color: var(--color-text-muted);
+}
+
+.request-status {
+  color: var(--color-primary);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.progress {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.progress::before {
+  content: "";
+  grid-column: 1;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: var(--color-surface-muted);
+}
+
+.progress div {
+  grid-column: 1;
+  grid-row: 1;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: var(--color-primary);
+  z-index: 1;
+}
+
+.progress span {
+  grid-column: 2;
+  grid-row: 1;
+  font-size: 0.75rem;
+}
+
+@media (max-width: 520px) {
+  .welcome-card {
+    align-items: flex-start;
+  }
+}

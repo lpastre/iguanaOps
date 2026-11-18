@@ -1,0 +1,15 @@
+<main class="login-page">
+  <section class="login-card surface-card" aria-labelledby="login-title">
+    <div class="login-brand" aria-label="IguanaOps">
+      <span class="brand-mark" aria-hidden="true">IO</span>
+      <span>Iguana<strong>Ops</strong></span>
+    </div>
+    <h1 id="login-title">Acesse sua plataforma de engenharia</h1>
+    <p>Entre com sua conta corporativa para acompanhar suas solicitações.</p>
+    <button type="button" class="sign-in-button" (click)="signIn()">Entrar com Keycloak</button>
+    <button type="button" class="mock-sign-in-button" (click)="mockSignIn()">
+      <strong>Modo temporário</strong>
+      Entrar sem autenticação
+    </button>
+  </section>
+</main>

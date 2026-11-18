@@ -1,0 +1,68 @@
+<a class="skip-link" href="#main-content">Pular para o conteúdo</a>
+
+<div class="app-shell">
+  <aside class="sidebar" [class.is-open]="menuOpen()">
+    <a class="brand" routerLink="/" aria-label="IguanaOps, página inicial" (click)="closeMenu()">
+      <span class="brand-mark" aria-hidden="true">I</span>
+      <span>Iguana<span class="brand-accent">Ops</span></span>
+    </a>
+
+    <p class="nav-caption">PLATAFORMA</p>
+    <nav id="primary-navigation" class="primary-navigation" aria-label="Navegação principal">
+      <a
+        routerLink="/"
+        routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        (click)="closeMenu()"
+      >
+        <span class="nav-icon" aria-hidden="true">01</span>
+        <span>Home</span>
+      </a>
+      <a routerLink="/projects" routerLinkActive="is-active" (click)="closeMenu()">
+        <span class="nav-icon" aria-hidden="true">02</span>
+        <span>Criar Projeto</span>
+      </a>
+      <a routerLink="/workflows" routerLinkActive="is-active" (click)="closeMenu()">
+        <span class="nav-icon" aria-hidden="true">03</span>
+        <span>Criar Workflow</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button type="button" class="profile-button" aria-label="Perfil da conta">
+        <span class="workspace-mark" aria-hidden="true">IO</span>
+        <span>
+          <strong>IguanaOps</strong>
+          <small>Perfil</small>
+        </span>
+      </button>
+      <button type="button" class="sign-out-button" (click)="signOut()">
+        Sair
+      </button>
+    </div>
+  </aside>
+
+  <div class="main-column">
+    <header class="topbar">
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-controls="primary-navigation"
+        [attr.aria-expanded]="menuOpen()"
+        [attr.aria-label]="menuOpen() ? 'Fechar navegação' : 'Abrir navegação'"
+        (click)="toggleMenu()"
+      >
+        <span aria-hidden="true">{{ menuOpen() ? 'Fechar' : 'Menu' }}</span>
+      </button>
+      <div class="topbar-context">
+        <span class="context-dot" aria-hidden="true"></span>
+        <span>Portal de engenharia</span>
+      </div>
+      <app-theme-toggle />
+    </header>
+
+    <main id="main-content" tabindex="-1">
+      <router-outlet />
+    </main>
+  </div>
+</div>
