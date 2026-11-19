@@ -4,6 +4,7 @@ import { AppShell } from './layouts/app-shell/app-shell';
 import { LoginPage } from './features/auth/login-page';
 import { CallbackPage } from './features/auth/callback-page';
 import { PlaceholderPage } from './features/placeholder/placeholder-page';
+import { ProjectCreationPage } from './features/project-creation/project-creation-page';
 import { authGuard } from './core/auth/auth.guard';
 
 export const routes: Routes = [
@@ -22,12 +23,7 @@ export const routes: Routes = [
       },
       {
         path: 'projects',
-        component: PlaceholderPage,
-        data: {
-          title: 'Criar Projeto indisponível',
-          description:
-            'A criação de projetos ainda não está disponível nesta versão.',
-        },
+        component: ProjectCreationPage,
       },
       {
         path: 'workflows',

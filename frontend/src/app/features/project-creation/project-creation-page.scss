@@ -1,0 +1,235 @@
+.project-creation-page {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.page-heading h1 {
+  margin: 0.25rem 0 0.5rem;
+}
+
+.page-heading p {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.wizard-card {
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.phase-progress {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.4rem;
+  margin: 0 0 2rem;
+  padding: 0;
+  list-style: none;
+}
+
+.phase-progress::before {
+  position: absolute;
+  top: 0.95rem;
+  right: 10%;
+  left: 10%;
+  height: 2px;
+  background: var(--color-border);
+  content: '';
+}
+
+.phase-progress li {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  min-width: 0;
+  justify-items: center;
+  align-content: start;
+  gap: 0.45rem;
+  text-align: center;
+}
+
+.phase-dot {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border: 2px solid var(--color-border);
+  border-radius: 50%;
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  font-weight: 750;
+}
+
+.phase-label {
+  max-width: 9rem;
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  font-weight: 650;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.phase-progress .is-current .phase-dot {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.phase-progress .is-current .phase-label,
+.phase-progress .is-complete .phase-label {
+  color: var(--color-text);
+}
+
+.phase-progress .is-complete .phase-dot {
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+  color: var(--color-primary-strong);
+}
+
+.step-heading {
+  margin-bottom: 1.5rem;
+}
+
+.step-heading h2 {
+  margin: 0.25rem 0 0.5rem;
+}
+
+.step-heading p {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.form-grid label {
+  display: grid;
+  gap: 0.45rem;
+  color: var(--color-text);
+  font-weight: 650;
+}
+
+.field-error {
+  color: var(--color-danger, #b42318);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.form-grid [aria-invalid='true'] {
+  border-color: var(--color-danger, #b42318);
+}
+
+.form-grid input,
+.form-grid select,
+.form-grid textarea {
+  width: 100%;
+  min-height: 2.9rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.7rem;
+  background: var(--color-surface);
+  color: var(--color-text);
+  padding: 0.65rem 0.75rem;
+  font: inherit;
+}
+
+.form-grid textarea {
+  resize: vertical;
+}
+
+.field-wide {
+  grid-column: 1 / -1;
+}
+
+.step-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.step-actions button {
+  min-height: 2.75rem;
+  border: 0;
+  border-radius: 0.75rem;
+  padding: 0.5rem 1rem;
+  font: inherit;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.primary-button {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.secondary-button {
+  border: 1px solid var(--color-border) !important;
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.step-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.execution-message {
+  margin: 1.25rem 0 0;
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  background: var(--color-surface);
+  padding: 0.75rem 1rem;
+}
+
+.execution-message.is-error {
+  border-color: var(--color-danger, #b42318);
+  color: var(--color-danger, #b42318);
+}
+
+.execution-message.is-success {
+  border-color: var(--color-success, #16804a);
+  color: var(--color-success, #16804a);
+}
+
+.iac-review {
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  background: var(--color-primary-soft);
+  padding: 1rem;
+}
+
+.iac-review h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1rem;
+}
+
+.iac-review p {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 640px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .phase-progress {
+    gap: 0.15rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .phase-label {
+    font-size: 0.65rem;
+  }
+
+  .step-actions {
+    flex-wrap: wrap;
+  }
+
+  .step-actions button {
+    flex: 1 1 30%;
+  }
+}

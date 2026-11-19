@@ -1,0 +1,347 @@
+<section class="page-content project-creation-page">
+  <header class="page-heading">
+    <span class="eyebrow">Provisionamento</span>
+    <h1>Criar projeto</h1>
+    <p>Configure seu novo projeto em cinco etapas.</p>
+  </header>
+
+  <section class="wizard-card surface-card" aria-labelledby="step-title">
+    <ol class="phase-progress" aria-label="Etapas da criação do projeto">
+      @for (phase of phases; track phase.title; let index = $index) {
+        <li
+          [class.is-current]="currentPhase() === index"
+          [class.is-complete]="currentPhase() > index"
+          [attr.aria-current]="currentPhase() === index ? 'step' : null"
+        >
+          <span class="phase-dot" aria-hidden="true">{{ index + 1 }}</span>
+          <span class="phase-label">{{ phase.title }}</span>
+        </li>
+      }
+    </ol>
+
+    @switch (currentPhase()) {
+      @case (0) {
+        <form [formGroup]="serviceForm" aria-labelledby="step-title">
+          <div class="step-heading">
+            <span class="eyebrow">Etapa 1 de 5</span>
+            <h2 id="step-title">Informações do serviço</h2>
+            <p>Defina as informações básicas do serviço que será criado.</p>
+          </div>
+          <div class="form-grid">
+            <label>
+              Nome do serviço
+              <input
+                id="service-name"
+                formControlName="serviceName"
+                autocomplete="off"
+                required
+                [attr.aria-invalid]="hasError(serviceForm.controls.serviceName)"
+                [attr.aria-describedby]="hasError(serviceForm.controls.serviceName) ? 'service-name-error' : null"
+              />
+              @if (hasError(serviceForm.controls.serviceName)) {
+                <span id="service-name-error" class="field-error" role="alert">
+                  {{ validationMessage(serviceForm.controls.serviceName) }}
+                </span>
+              }
+            </label>
+            <label>
+              Namespace
+              <input
+                id="service-namespace"
+                formControlName="namespace"
+                autocomplete="off"
+                required
+                [attr.aria-invalid]="hasError(serviceForm.controls.namespace)"
+                [attr.aria-describedby]="hasError(serviceForm.controls.namespace) ? 'service-namespace-error' : null"
+              />
+              @if (hasError(serviceForm.controls.namespace)) {
+                <span id="service-namespace-error" class="field-error" role="alert">
+                  {{ validationMessage(serviceForm.controls.namespace) }}
+                </span>
+              }
+            </label>
+            <label class="field-wide">
+              Descrição
+              <textarea id="service-description" formControlName="description" rows="3"></textarea>
+            </label>
+            <label>
+              Equipe responsável
+              <input id="service-team" formControlName="responsibleTeam" autocomplete="organization" />
+            </label>
+          </div>
+        </form>
+      }
+      @case (1) {
+        <form [formGroup]="platformForm" aria-labelledby="step-title">
+          <div class="step-heading">
+            <span class="eyebrow">Etapa 2 de 5</span>
+            <h2 id="step-title">Plataforma</h2>
+            <p>Defina o destino e o ambiente de execução.</p>
+          </div>
+          <div class="form-grid">
+            <label>
+              Plataforma Kubernetes
+              <select
+                id="kubernetes-target"
+                formControlName="kubernetesTarget"
+                required
+                [attr.aria-invalid]="hasError(platformForm.controls.kubernetesTarget)"
+                [attr.aria-describedby]="hasError(platformForm.controls.kubernetesTarget) ? 'kubernetes-target-error' : null"
+              >
+                <option value="">Selecione uma plataforma</option>
+                <option value="openshift">OpenShift</option>
+                <option value="eks">EKS</option>
+              </select>
+              @if (hasError(platformForm.controls.kubernetesTarget)) {
+                <span id="kubernetes-target-error" class="field-error" role="alert">
+                  {{ validationMessage(platformForm.controls.kubernetesTarget) }}
+                </span>
+              }
+            </label>
+            <label>
+              Ambiente
+              <select
+                id="deployment-environment"
+                formControlName="environment"
+                required
+                [attr.aria-invalid]="hasError(platformForm.controls.environment)"
+                [attr.aria-describedby]="hasError(platformForm.controls.environment) ? 'deployment-environment-error' : null"
+              >
+                <option value="">Selecione um ambiente</option>
+                <option value="development">Desenvolvimento</option>
+                <option value="staging">Homologação</option>
+                <option value="production">Produção</option>
+              </select>
+              @if (hasError(platformForm.controls.environment)) {
+                <span id="deployment-environment-error" class="field-error" role="alert">
+                  {{ validationMessage(platformForm.controls.environment) }}
+                </span>
+              }
+            </label>
+            <label>
+              Cluster de destino
+              <input id="target-cluster" formControlName="targetCluster" />
+            </label>
+            <label>
+              Região
+              <input id="deployment-region" formControlName="region" />
+            </label>
+          </div>
+        </form>
+      }
+      @case (2) {
+        <form [formGroup]="templateForm" aria-labelledby="step-title">
+          <div class="step-heading">
+            <span class="eyebrow">Etapa 3 de 5</span>
+            <h2 id="step-title">Template do projeto</h2>
+            <p>Escolha o archetype que será usado como ponto de partida.</p>
+          </div>
+          <div class="form-grid">
+            <label class="field-wide">
+              Template
+              <select
+                id="project-template"
+                formControlName="archetype"
+                required
+                [attr.aria-invalid]="hasError(templateForm.controls.archetype)"
+                [attr.aria-describedby]="hasError(templateForm.controls.archetype) ? 'project-template-error' : null"
+              >
+                <option value="">Selecione um template</option>
+                @for (template of projectTemplates; track template) {
+                  <option [value]="template">{{ template }}</option>
+                }
+              </select>
+              @if (hasError(templateForm.controls.archetype)) {
+                <span id="project-template-error" class="field-error" role="alert">
+                  {{ validationMessage(templateForm.controls.archetype) }}
+                </span>
+              }
+            </label>
+            <label>
+              Versão do template
+              <input id="template-version" formControlName="templateVersion" />
+            </label>
+            @if (templateForm.controls.archetype.value.startsWith('Microservice Spring Boot')) {
+              <label>
+                Variante de execução
+                <select id="runtime-variant" formControlName="runtimeVariant">
+                  <option value="">Selecione uma variante</option>
+                  <option value="jvm">JVM</option>
+                  <option value="native">Native</option>
+                </select>
+              </label>
+              <label>
+                Versão do Java
+                <input id="language-version" formControlName="languageVersion" />
+              </label>
+            }
+          </div>
+        </form>
+      }
+      @case (3) {
+        <form [formGroup]="repositoryForm" aria-labelledby="step-title">
+          <div class="step-heading">
+            <span class="eyebrow">Etapa 4 de 5</span>
+            <h2 id="step-title">Repositório e pipeline</h2>
+            <p>Informe o endereço Git e os parâmetros iniciais de automação.</p>
+          </div>
+          <div class="form-grid">
+            <label class="field-wide">
+              Endereço do repositório Git
+              <input
+                id="git-address"
+                formControlName="gitAddress"
+                autocomplete="url"
+                required
+                [attr.aria-invalid]="hasError(repositoryForm.controls.gitAddress)"
+                [attr.aria-describedby]="hasError(repositoryForm.controls.gitAddress) ? 'git-address-error' : null"
+              />
+              @if (hasError(repositoryForm.controls.gitAddress)) {
+                <span id="git-address-error" class="field-error" role="alert">
+                  {{ validationMessage(repositoryForm.controls.gitAddress) }}
+                </span>
+              }
+            </label>
+            <label>
+              Nome do repositório
+              <input
+                id="repository-name"
+                formControlName="repositoryName"
+                required
+                [attr.aria-invalid]="hasError(repositoryForm.controls.repositoryName)"
+                [attr.aria-describedby]="hasError(repositoryForm.controls.repositoryName) ? 'repository-name-error' : null"
+              />
+              @if (hasError(repositoryForm.controls.repositoryName)) {
+                <span id="repository-name-error" class="field-error" role="alert">
+                  {{ validationMessage(repositoryForm.controls.repositoryName) }}
+                </span>
+              }
+            </label>
+            <label>
+              Branch padrão
+              <input
+                id="default-branch"
+                formControlName="defaultBranch"
+                required
+                [attr.aria-invalid]="hasError(repositoryForm.controls.defaultBranch)"
+                [attr.aria-describedby]="hasError(repositoryForm.controls.defaultBranch) ? 'default-branch-error' : null"
+              />
+              @if (hasError(repositoryForm.controls.defaultBranch)) {
+                <span id="default-branch-error" class="field-error" role="alert">
+                  {{ validationMessage(repositoryForm.controls.defaultBranch) }}
+                </span>
+              }
+            </label>
+            <label>
+              Perfil da pipeline
+              <input id="pipeline-profile" formControlName="pipelineProfile" />
+            </label>
+          </div>
+        </form>
+      }
+      @case (4) {
+        <form [formGroup]="resourcesForm" aria-labelledby="step-title">
+          <div class="step-heading">
+            <span class="eyebrow">Etapa 5 de 5</span>
+            <h2 id="step-title">Recursos cloud</h2>
+            <p>Indique se o projeto precisa de recursos adicionais.</p>
+          </div>
+          <div class="form-grid">
+            <label class="field-wide">
+              <span>Precisa de recursos cloud adicionais?</span>
+              <select
+                id="has-additional-resources"
+                formControlName="hasAdditionalResources"
+                (change)="onResourceChoiceChange()"
+              >
+                <option [ngValue]="false">Não</option>
+                <option [ngValue]="true">Sim</option>
+              </select>
+            </label>
+            @if (resourcesForm.controls.hasAdditionalResources.value) {
+              <label>
+                Tipo de recurso
+                <select
+                  id="resource-type"
+                  formControlName="resourceType"
+                  required
+                  [attr.aria-invalid]="hasError(resourcesForm.controls.resourceType)"
+                  [attr.aria-describedby]="hasError(resourcesForm.controls.resourceType) ? 'resource-type-error' : null"
+                >
+                  <option value="">Selecione um recurso</option>
+                  <option value="database">Banco de dados</option>
+                  <option value="secret-manager">Secret manager</option>
+                </select>
+                @if (hasError(resourcesForm.controls.resourceType)) {
+                  <span id="resource-type-error" class="field-error" role="alert">
+                    {{ validationMessage(resourcesForm.controls.resourceType) }}
+                  </span>
+                }
+              </label>
+              <label>
+                Nome do recurso
+                <input
+                  id="resource-name"
+                  formControlName="resourceName"
+                  required
+                  [attr.aria-invalid]="hasError(resourcesForm.controls.resourceName)"
+                  [attr.aria-describedby]="hasError(resourcesForm.controls.resourceName) ? 'resource-name-error' : null"
+                />
+                @if (hasError(resourcesForm.controls.resourceName)) {
+                  <span id="resource-name-error" class="field-error" role="alert">
+                    {{ validationMessage(resourcesForm.controls.resourceName) }}
+                  </span>
+                }
+              </label>
+              <label class="field-wide">
+                Configuração do recurso
+                <textarea id="resource-configuration" formControlName="resourceConfiguration" rows="4"></textarea>
+              </label>
+              <section class="iac-review field-wide" aria-labelledby="iac-review-title" role="status">
+                <h3 id="iac-review-title">Revisão do IaC</h3>
+                <p>
+                  A geração do template IaC ficará disponível após a integração com o serviço de templates.
+                  Nenhum código IaC foi gerado para esta solicitação.
+                </p>
+              </section>
+            }
+          </div>
+        </form>
+      }
+    }
+
+    @if (activeExecution(); as execution) {
+      <p
+        class="execution-message"
+        [class.is-error]="execution.status === 'failed' || execution.status === 'unavailable'"
+        [class.is-success]="execution.status === 'success'"
+        [attr.role]="execution.status === 'failed' || execution.status === 'unavailable' ? 'alert' : 'status'"
+        aria-live="polite"
+      >
+        {{ execution.message }}
+      </p>
+    }
+
+    <footer class="step-actions">
+      <button type="button" class="secondary-button" (click)="previousPhase()" [disabled]="currentPhase() === 0">
+        Voltar
+      </button>
+      <button
+        type="button"
+        class="secondary-button execute-button"
+        (click)="executeCurrentPhase()"
+        [disabled]="executionIsPending()"
+      >
+        Executar
+      </button>
+      <button
+        type="button"
+        class="primary-button"
+        (click)="nextPhase()"
+        [disabled]="currentPhase() === phases.length - 1"
+      >
+        Avançar
+      </button>
+    </footer>
+  </section>
+</section>
